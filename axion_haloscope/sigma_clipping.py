@@ -6,7 +6,7 @@ place here, just the passing of masks so that the clipping can occur in the data
 """
 from typing import Tuple, List
 import warnings
-
+from typing import Optional
 import numpy as np
 from scipy.interpolate import interp1d
 from axion_haloscope.baseline import remove_baseline
@@ -272,10 +272,10 @@ def general_clipping(
     sg_window: int,
     sg_order: int,
     sigma_cut: float,
-    freqs: np.ndarray | None = None,
-    baseline: np.ndarray | None = None,
-    current_mask: np.ndarray | None = None,
-    iteration: int | None = None
+    freqs: Optional[np.ndarray] = None,
+    baseline: Optional[np.ndarray] = None,
+    current_mask: Optional[np.ndarray] = None,
+    iteration: Optional[int] = None
 ) -> Tuple[np.ndarray, np.ndarray, np.ndarray, float, float]:
     """
     A general clipping algorithm. Cleans each spectra by performing 

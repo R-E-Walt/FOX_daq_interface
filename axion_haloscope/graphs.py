@@ -4,7 +4,7 @@ Graphs
 
 
 """
-
+from typing import Optional
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
@@ -127,7 +127,7 @@ def plot_spectrum(x: np.array,
                 y: np.array,
                 title: str,
                 output_loc: str,
-                label: str | None = None,
+                label: Optional[str] = None,
                 ):
     """
     Plot of a spectrum against frequency
@@ -181,7 +181,7 @@ def vs_time_hist(data: np.array,
             location of where the plot will be saved.      
     """
     plt.figure(figsize=(13,7))
-    plt.hist(data, bin_num, range, stacked=True)
+    plt.hist(data, 8000, range, stacked=True)
     plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%Y-%m-%d"))
     plt.gca().xaxis.set_major_locator(mdates.DayLocator(interval=1))
     plt.legend(data_label)
@@ -684,7 +684,8 @@ def plot_data_cleaning(freq, spec,metadata, baseline, threshold, residuals, spec
 
     ax2.plot(freq[unmasked]/1e6, residuals[unmasked], lw=1.0, alpha=0.75, color=color, label="Masked Residuals")
     ax2.plot(freq/1e6, residuals, lw=1.0, alpha=0.35, color=color, label="Unmasked Residuals")
-    ax2.axhline(threshold, alpha=0.35, color="red", linestyle="dashed",label=f"{base["sigma_cut"]}σ Threshold")
+    sig_thre=base["sigma_cut"]
+    ax2.axhline(threshold, alpha=0.35, color="red", linestyle="dashed",label=f"{sig_thre}σ Threshold")
     ax2.axhline(-threshold, alpha=0.35, color="red", linestyle="dashed")
     max_vals = [np.max(spec[masked_this_iteration])] if masked_this_iteration.any() else []
     if masked_previously.any():
