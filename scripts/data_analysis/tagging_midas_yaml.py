@@ -2,27 +2,18 @@
 from __future__ import annotations
 import argparse
 import matplotlib
-from bitstring import BitArray
-import h5py
-from types import SimpleNamespace
 import numpy as np
 import pandas as pd
 import datetime, os, sys
-import json
 from pathlib import Path
-from tabulate import tabulate
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
-from typing import Dict
 import pathlib
 import matplotlib.cm as cm
 from tqdm import tqdm
-import shutil
 import psycopg2
-import hickle as hkl
-from dataclasses import dataclass
 
-from axion_haloscope.file_converter import SpectrumSet, MidasFileReader
+from axion_haloscope.file_converter import MidasFileReader
 
 from axion_haloscope.data_quality_working import power_too_high, small_bandwidth, metadata_is_zeros, too_noisy
 from axion_haloscope.utils                import create_directory, find_project_root, load_yaml_config
@@ -249,6 +240,38 @@ if tag["diagnostic_mode"] == True:
     bad_runs_pwr=[["Too noisy",tn],["Power too high",pth]]
     df_pwr=pd.DataFrame(bad_runs_pwr, columns=["Issue", "No of spectra"])
     print(df_pwr)
+
+    error_names = [
+    "Missing all metadata", "Missing type", "Missing x unit",
+    "Missing y unit", "Missing sample rate", "Missing start",
+    "Missing stop", "Missing start binary", "Missing stop binary",
+    "Missing n_run", "Cavity not in chain", "Missing cavity metadata", "Missing b_vals",
+    "Missing q_factors", "Missing res_freqs", "Missing cw_freqs",
+    "Missing bandwidths", "Invalid x unit", "Invalid y unit",
+    "Invalid sample rate", "Invalid stop time", "Too noisy",
+    "Power too high",
+]
+    error_df = pd.DataFrame(
+        bits_tot,
+        index=[file.name for file in files],
+        columns=error_names,
+    )
+
+    fig, ax = plt.subplots(figsize=(14, max(5, len(files) * 0.3)))
+    cmap =matplotlib.colors.ListedColormap(["white","blueviolet"])
+    image = ax.imshow(error_df, aspect="auto", interpolation="nearest",
+                      cmap=cmap, vmin=0, vmax=1)
+
+    ax.set_yticks(range(len(error_df)))
+    ax.set_yticklabels(error_df.index)
+    ax.set_xticks(range(len(error_names)))
+    ax.set_xticklabels(error_names, rotation=60)
+    ax.set_xlabel("Error")
+    ax.set_ylabel("File")
+    fig.colorbar(image, ax=ax, label="Error present")
+    fig.tight_layout()
+    fig.savefig("errors_by_file.png", dpi=150)
+    plt.close(fig)
 
 
 
