@@ -315,11 +315,12 @@ def main():
     time_array_index = qc["time_array_index"]
 
     old_sset = sset
-    sset = cut_by_datetime(
-        sset,
-        time_array[time_array_index][0],
-        time_array[time_array_index][1],
-    )
+    if qc["bad_time_filter"]:
+        sset = cut_by_datetime(
+            sset,
+            time_array[time_array_index][0],
+            time_array[time_array_index][1],
+        )
     if diagnostic_mode:
         print("-" * 60)
         print("Applying Time Cuts")
