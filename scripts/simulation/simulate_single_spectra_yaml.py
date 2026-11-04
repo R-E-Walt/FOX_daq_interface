@@ -15,13 +15,6 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
 from axion_haloscope.simulation import simulate_spectra, AxionParams
-from axion_haloscope.baseline   import remove_baseline
-from axion_haloscope.combine    import combine_ml
-from axion_haloscope.rebin      import rebin_ml, grand_spectrum_ml
-from axion_haloscope.lineshape  import shm_maxwell_template
-from axion_haloscope.detection  import threshold_for_detection, find_candidates
-from axion_haloscope.limit      import compute_local_snr_template, coupling_limit, plot_exclusion
-
 
 def _get(d, key, default):
     v = d.get(key, default)
