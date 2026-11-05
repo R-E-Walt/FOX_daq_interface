@@ -25,7 +25,7 @@ from axion_haloscope.detection  import threshold_for_detection, find_candidates
 from axion_haloscope.limit      import compute_local_snr_template, coupling_limit
 from axion_haloscope.graphs import plot_exclusion
 from axion_haloscope.data_quality import filter_spectrum_set, too_noisy
-from axion_haloscope.io_working import SpectrumSet
+from axion_haloscope.io import SpectrumSet
 from axion_haloscope.width_fq   import width_from_fq
 from axion_haloscope.utils import find_project_root
 
