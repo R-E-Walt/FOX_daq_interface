@@ -13,7 +13,7 @@ import matplotlib.pyplot as plt
 import datetime
 
 
-from axion_haloscope.io import read_qshs_hdf5_dir
+from axion_haloscope.io_working import read_qshs_hdf5_dir
 from axion_haloscope.data_quality import filter_spectrum_set, too_noisy, restrict_frequency_range
 from axion_haloscope.baseline import remove_baseline
 from axion_haloscope.combine import combine_ml
