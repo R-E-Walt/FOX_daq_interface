@@ -22,7 +22,7 @@ from axion_haloscope.baseline     import remove_baseline, align_and_average_spec
 from axion_haloscope.combine      import combine_ml
 from axion_haloscope.data_quality import filter_spectrum_set, too_noisy
 from axion_haloscope.detection    import threshold_for_detection, find_candidates
-from axion_haloscope.io           import SpectrumSet
+from axion_haloscope.io_working   import SpectrumSet
 from axion_haloscope.limit        import compute_local_snr_template, coupling_limit
 from axion_haloscope.graphs       import plot_exclusion
 from axion_haloscope.lineshape    import shm_maxwell_template
@@ -199,7 +199,8 @@ def main():
         n_spectra=sim["n_spectra"], n_bins=sim["n_bins"],
         freq_axion=sim["freq_axion"], freq_downmixed=sim["freq_downmixed"],
         samples_per_cycle=sim["samples_per_cycle"],
-        run_dir = run_dir
+        run_dir = run_dir,
+        metadata=None
         )
     specs, fper, rf, rf_map, metadata = sset.spectra, sset.freqs_per_spec, sset.rf_grid, sset.rf_index_map, sset.metadata
 
