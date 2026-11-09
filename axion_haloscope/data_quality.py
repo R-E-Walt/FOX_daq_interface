@@ -2,7 +2,7 @@
 from __future__ import annotations
 from typing import Callable, Iterable, List, Tuple
 import numpy as np
-from .io import SpectrumSet
+from .io_working import SpectrumSet
 
 BadPredicate = Callable[[np.ndarray, np.ndarray, int], bool]
 
@@ -74,6 +74,7 @@ def filter_spectrum_set(
         freqs_per_spec=[sset.freqs_per_spec[i] for i in keep],
         rf_grid=sset.rf_grid,
         rf_index_map=[sset.rf_index_map[i] for i in keep],
+        metadata=None
     )
     return filtered, keep, bad
 
@@ -137,4 +138,5 @@ def restrict_frequency_range(
         freqs_per_spec=freqs_new,
         rf_grid=rf_grid_new,
         rf_index_map=rf_index_map_new,
+        metadata=None
     )
